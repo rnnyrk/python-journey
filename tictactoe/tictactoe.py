@@ -22,7 +22,26 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    raise NotImplementedError
+    
+    # Loop the board to check the number of X and O
+    x_count = 0
+    o_count = 0
+
+    for i in range(3): # Loop through the rows
+        for j in range(3): # Loop through the columns
+            if board[i][j] == X:
+                x_count += 1
+            elif board[i][j] == O:
+                o_count += 1
+
+    print(f"X: {x_count}, O: {o_count}")
+
+    # If the number of X is greater than O, then it is O's turn
+    # Otherwise it is X's turn, also when the board is empty, cause X start
+    if (x_count > o_count):
+        return O
+    else:
+        return X
 
 
 def actions(board):
