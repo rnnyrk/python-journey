@@ -160,13 +160,17 @@ def utility(board):
 
 
 def max_value(board):
-    value = -math.inf 
+    value = -math.inf
+
+    # Check if recursion gives a terminal board
     if (terminal(board)):
         return utility(board)
     
     possible_actions = actions(board)
     for action in possible_actions:
         new_board = result(board, action)
+
+        # Maxamizing player action that produces the lowest value of min_value
         value = max(value, min_value(new_board))
 
     return value
@@ -174,12 +178,16 @@ def max_value(board):
 
 def min_value(board):
     value = math.inf
+
+    # Check if recursion gives a terminal board
     if (terminal(board)):
         return utility(board)
     
     possible_actions = actions(board)
     for action in possible_actions:
         new_board = result(board, action)
+
+        # Minimizing player action that produces the highest value of max_value
         value = min(value, max_value(new_board))
 
     return value
@@ -194,10 +202,7 @@ def minimax(board):
     possible_actions = actions(board)
     plays = []
 
-    # Get the current player
-    # Check if the game is over from previous passed board (recursive call) line 203
     if terminal(board):
-        print("Current board is terminal, game over")
         return None
 
     elif current_player == X:
