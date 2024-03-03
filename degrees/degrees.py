@@ -62,10 +62,14 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Name: "))
+    # source = person_id_for_name(input("Name:"))
+    source = person_id_for_name("Tom Cruise")
+    # source = person_id_for_name("Emma Watson")
     if source is None:
         sys.exit("Person not found.")
-    target = person_id_for_name(input("Name: "))
+    # target = person_id_for_name(input("Name:"))
+    target = person_id_for_name("Adam Baldwin")
+    # target = person_id_for_name("Jennifer Lawrence")
     if target is None:
         sys.exit("Person not found.")
 
@@ -84,6 +88,34 @@ def main():
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
 
+def child_is_goal_solution(child):
+    movies = []
+    people = []
+    solution = []
+
+    print(f"Child: {child.state}, Parent: {child.parent.state}, Action: {child.action}")
+
+    # With the given solution, work our way back to the source
+    while child.parent is not None:
+        movies.append(child.action)
+        people.append(child.state)
+
+        child = child.parent
+    
+    # Reverse the list because we start from the source and the current list
+    # is appended from the target back to the source in the while above
+    movies.reverse()
+    people.reverse()
+
+    # Create an array of tuples with the movie_id and person_id
+    # e.g. [(movie_id_0, person_id_0), (movie_id_1, person_id_1), ...]
+    x = zip(movies, people)
+    for movie, person in x:
+        solution.append((movie, person))
+
+    return solution
+    
+
 def shortest_path(source, target):
     """
     Returns the shortest list of (movie_id, person_id) pairs
@@ -92,11 +124,40 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
+    num_explored = 0
+    start = Node(state=source, parent=None, action=None)
 
-    print(source, target)
+    frontier = QueueFrontier()
+    frontier.add(start)
 
-    # raise NotImplementedError
+    explored = set()
+
+    while True:
+        if frontier.empty():
+            raise Exception("No possible path found")
+        
+        # Choose a node from the frontier
+        node = frontier.remove()
+        num_explored += 1
+
+        # Add the current Node (DFS / BFS) to explored set
+        explored.add(node.state)
+
+        # For every neighbor of the current node
+        current_node_neighbors = neighbors_for_person(node.state)
+
+        for movie_id, person_id in current_node_neighbors:
+            # If the current person is not yet explored or in frontier
+            if not frontier.contains_state(person_id) and person_id not in explored:
+                # Create the new node to explore
+                child = Node(state=person_id, parent=node, action=movie_id)
+
+                # Check if new Node is goal
+                if child.state == target:
+                    return child_is_goal_solution(child)
+
+                # If not goal, add the new Node to the frontier to explore
+                frontier.add(child)
 
 
 def person_id_for_name(name):
