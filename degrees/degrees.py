@@ -93,7 +93,7 @@ def child_is_goal_solution(child):
     people = []
     solution = []
 
-    print(f"Child: {child.state}, Parent: {child.parent.state}, Action: {child.action}")
+    print(f"Goal Child: {child.state}, Goal first Parent: {child.parent.state}, Goal Movie Id: {child.action}")
 
     # With the given solution, work our way back to the source
     while child.parent is not None:
