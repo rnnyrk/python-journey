@@ -89,12 +89,12 @@ while True:
                 row.append(rect)
             tiles.append(row)
 
-        print(f"Board: {board}")
+        # print(f"Board: {board}")
 
         game_over = ttt.terminal(board)
         player = ttt.player(board)
 
-        print(f"Player: {player}, GameOver: {game_over}")
+        # print(f"Player: {player}, GameOver: {game_over}")
 
         # Show title
         if game_over:
@@ -108,7 +108,7 @@ while True:
         else:
             title = f"Computer thinking..."
 
-        print(f"Title: {title}")
+        # print(f"Title: {title}")
 
         title = largeFont.render(title, True, white)
         titleRect = title.get_rect()
