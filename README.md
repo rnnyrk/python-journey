@@ -1,7 +1,7 @@
 # python-journey
 
 <details>
-<summary>Lecture 0 (search problems)</summary>
+<summary>Harvard CS50 AI - Lecture 0 - Search</summary>
 
 ### Depth First Search (StackFrontier)
 
@@ -21,7 +21,7 @@ _(An example from outside lecture: Take a situation where you are looking for yo
 </details>
 
 <details>
-<summary>Lecture 1</summary>
+<summary>Harvard CS50 AI - Lecture 1 - Knowledge</summary>
 
 ### You can add a header
 
