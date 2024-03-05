@@ -8,6 +8,8 @@
 - **Model** is an assignment of a truth value to every proposition.
 - **Knowledge base (KB)** is a set of sentences known by a knowledge-based agent. This is knowledge that the AI is provided about the world in the form of propositional logic sentences that can be used to make additional inferences about the world.
 - **Entailment (⊨)** If `α ⊨ β` (α entails β), then in any world where `α` is true, `β` is true, too. _For example, if `α`: “It is a Tuesday in January” and `β`: “It is January,” then we know that `α ⊨ β`. If it is true that it is a Tuesday in January, we also know that it is January. Entailment is different from implication. Implication is a logical connective between two propositions. Entailment, on the other hand, is a relation that means that if all the information in `α` is true, then all the information in `β` is true._
+- **Inference** is the process of deriving new sentences from old ones.
+- **Knowledge Engineering** is the process of figuring out how to represent propositions and logic in AI.
 
 </details>
 
@@ -24,6 +26,42 @@
 
 <details>
 <summary>Inference (Rules)</summary>
+1. If it didn’t rain, Harry visited Hagrid today.
+2. Harry visited Hagrid or Dumbledore today, but not both.
+3. Harry visited Dumbledore today.
+4. Harry did not visit Hagrid.
+5. It rained today.
+
+**_Sentences 4 and 5 were inferred from sentences 1, 2, and 3._**
+
+To determine if `KB ⊨ α` (in other words, answering the question: “can we conclude that `α` is true based on our knowledge base”)
+
+**_If in every model where `KB` is true, `α` is true as well, then `KB` entails `α` (`KB ⊨ α`)._**
+
+```python
+from logic import *
+
+# Create new classes, each having a name, or a symbol, representing each proposition.
+rain = Symbol("rain")  # It is raining.
+hagrid = Symbol("hagrid")  # Harry visited Hagrid
+dumbledore = Symbol("dumbledore")  # Harry visited Dumbledore
+
+# Save sentences into the KB
+knowledge = And(  # Starting from the "And" logical connective, becasue each proposition represents knowledge that we know to be true.
+
+    Implication(Not(rain), hagrid),  # ¬(It is raining) → (Harry visited Hagrid)
+
+    Or(hagrid, dumbledore),  # (Harry visited Hagrid) ∨ (Harry visited Dumbledore).
+
+    Not(And(hagrid, dumbledore)),  # ¬(Harry visited Hagrid ∧ Harry visited Dumbledore) i.e. Harry did not visit both Hagrid and Dumbledore.
+
+    dumbledore  # Harry visited Dumbledore. Note that while previous propositions contained multiple symbols with connectors, this is a proposition consisting of one symbol. This means that we take as a fact that, in this KB, Harry visited Dumbledore.
+    )
+```
+
+### Inference Rules
+
+Inference rules are usually represented using a horizontal bar that separates the top part, the premise, from the bottom part, the conclusion. The premise is whatever knowledge we have, and the conclusion is what knowledge can be generated based on the premise.
 
 </details>
 
