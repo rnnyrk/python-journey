@@ -251,9 +251,11 @@ class MinesweeperAI():
                     self.mark_mine(mine_cell)
 
 
-        # Infere new senteces if A is subset of B
+        # Infere new senteces if new_sentence is a subset of another sentence
         for sentence in self.knowledge:
+            # Sentence should have count > 0, because if count == 0, it's already marked as safe
             if new_sentence.cells.issubset(sentence.cells) and sentence.count > 0 and new_sentence.count > 0 and new_sentence != sentence:
+                # Keep remaining cells and mines
                 new_subset = sentence.cells.difference(new_sentence.cells)
                 new_count = sentence.count - new_sentence.count
 
